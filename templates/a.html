@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Highlight Text in Textarea</title>
+    <style>
+        /* Define a CSS class for text highlighting */
+        .highlighted {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <textarea id="highlightedTextarea" rows="10" cols="50">This is some sample text that you can highlight.</textarea><br>
+    <button onclick="highlightText()">Highlight</button><br>
+
+    <script>
+        function highlightText() {
+            var textarea = document.getElementById("highlightedTextarea");
+            var text = textarea.value;
+            
+            // Get the selected text
+            var selectedText = text.substring(textarea.selectionStart, textarea.selectionEnd);
+            
+            // Wrap the selected text with a span with the "highlighted" class
+            var highlightedText = '<span class="highlighted">' + selectedText + '</span>';
+            
+            // Replace the selected text with the highlighted version
+            var newText = text.substring(0, textarea.selectionStart) + highlightedText + text.substring(textarea.selectionEnd);
+            
+            // Update the textarea content
+            textarea.innerHTML = newText;
+        }
+    </script>
+</body>
+</html>
+In this code:
+
+We define a textarea element with the ID highlightedTextarea and some sample text.
+There's a "Highlight" button that, when clicked, triggers the highlightText JavaScript function.
+Inside the highlightText function, we get the selected text within the textarea and wrap it with a <span> element with the highlighted class, which defines the background color for highlighting.
+We then replace the selected text with the highlighted version by updating the textarea content.
+When you select text within the textarea and click the "Highlight" button, the selected text will be highlighted with a yellow background. You can modify the CSS styles and highlight color to suit your design preferences.
+
+
+
+
+

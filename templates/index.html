@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--font: "Inter", sans-serif;
+	--red: #da2535;
+	--black: #292929;
+	--white: #fbfbfb;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+img {
+	max-width: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+body {
+	min-height: 100vh;
+	background: #F0F3F4;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--font);
+	padding: 0 1rem;
+}
+
+/* SEARCH BAR CONTAINER */
+.search-local {
+	width: 100%;
+	max-width: 75rem;
+	display: flex;
+	align-items: center;
+	column-gap: 2rem;
+	padding-left: 2rem;
+	background: var(--white);
+	border-radius: 1rem;
+	min-height: 7rem;
+	height: auto;
+	border: 0.1rem solid var(--black);
+	border-right: none;
+}
+
+/* ICON */
+.icon {
+	color: var(--red);
+	font-size: 3.5rem;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.icon:hover {
+	animation: funny-icon 0.4s ease-in-out;
+}
+
+@keyframes funny-icon {
+	0% {
+		scale: 1;
+	}
+
+	50% {
+		scale: 0.8;
+		transform-origin: bottom;
+		transform: rotate(-15deg);
+	}
+
+	100% {
+		scale: 1;
+	}
+}
+
+/* INPUT */
+.search-local input {
+	height: 100%;
+	width: 100%;
+	flex: 1 1 25rem;
+	background: var(--white);
+	display: flex;
+	outline: none;
+	border: none;
+	color: var(--black);
+	font-size: 2.4rem;
+}
+
+input[type="text"]::placeholder {
+	color: var(--black);
+	font-size: 2.4rem;
+}
+
+/* BUTTON */
+.search-local button {
+	background: var(--red);
+	border: none;
+	border-radius: 0 1rem 1rem 0;
+	font-weight: 500;
+	font-size: 2.4rem;
+	height: 7rem;
+	width: 18rem;
+	cursor: pointer;
+	transition: all 0.3s;
+	text-align: center;
+}
+
+button a {
+	color: var(--white);
+}
+
+.search-local button .search-icon {
+	display: none;
+}
+
+.search-local button:hover {
+	letter-spacing: 0.5rem;
+}
+
+/* MEDIAS */
+@media (max-width: 575px) {
+	.search-local {
+		padding-left: 0;
+		column-gap: 0.25rem;
+	}
+
+	.search-local button {
+		width: 10rem;
+	}
+
+	button a {
+		display: none;
+	}
+
+	.search-local button .search-icon {
+		display: block;
+		margin-inline: auto;
+		color: var(--white);
+		font-size: 3rem;
+	}
+
+	input[type="text"]::placeholder {
+		font-size: 1.7rem;
+	}
+}
+
+#p {
+	position: absolute;
+    left: 62%;
+    bottom: 40%;
+    /* top: 1%; */
+    font-size: 20px;
+}
+
+h1{
+	position: absolute;
+    color: #da2535;
+    top: 34%;
+	font-size: 40px;
+}
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Reading</title>
+</head>
+<body>
+	<h1>Content Reading</h1>
+    <div class="search-local">
+        <div class="icon">
+            <ion-icon name="location-outline"></ion-icon>
+        </div>
+    
+        <input type="text" placeholder="Enter URL" id="url">
+        <button onclick="get_process()">
+            <a href="#">Processing</a>
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+        </button>
+    </div>
+	<a href="/secondpages" id="p">Search for Content </a>
+
+
+    <!-- icons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+	<script>
+
+		function get_process(){
+			var url = document.getElementById("url").value;
+
+			if(url!=""){
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '/processing?url='+url, true);
+
+				xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						var data = JSON.parse(xhr.responseText);
+						
+						alert(data['messages']); // Use the data in your code
+					} else {
+					console.error('Request failed with status:', xhr.status);
+					}
+				}
+				};
+
+				xhr.send();
+			}
+			else{
+				alert("Empty URL field")
+			}
+		}
+
+
+	</script>
+</body>
+</html>

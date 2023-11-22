@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	--font: "Inter", sans-serif;
+	--red: #da2535;
+	--black: #292929;
+	--white: #fbfbfb;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+img {
+	max-width: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+body {
+	min-height: 40vh;
+	background: #F0F3F4;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--font);
+	padding: 0 1rem;
+}
+
+/* SEARCH BAR CONTAINER */
+.search-local {
+	width: 100%;
+	max-width: 75rem;
+	display: flex;
+	align-items: center;
+	column-gap: 2rem;
+	padding-left: 2rem;
+	background: var(--white);
+	border-radius: 1rem;
+	min-height: 7rem;
+	height: auto;
+	border: 0.1rem solid var(--black);
+	border-right: none;
+}
+
+/* ICON */
+.icon {
+	color: var(--red);
+	font-size: 3.5rem;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.icon:hover {
+	animation: funny-icon 0.4s ease-in-out;
+}
+
+@keyframes funny-icon {
+	0% {
+		scale: 1;
+	}
+
+	50% {
+		scale: 0.8;
+		transform-origin: bottom;
+		transform: rotate(-15deg);
+	}
+
+	100% {
+		scale: 1;
+	}
+}
+
+/* INPUT */
+.search-local input {
+	height: 100%;
+	width: 100%;
+	flex: 1 1 25rem;
+	background: var(--white);
+	display: flex;
+	outline: none;
+	border: none;
+	color: var(--black);
+	font-size: 2.4rem;
+}
+
+.search-local textarea {
+	height: 100%;
+	width: 100%;
+	flex: 1 1 25rem;
+	background: var(--white);
+	display: flex;
+	outline: none;
+	border: none;
+	color: var(--black);
+	font-size: 2.4rem;
+}
+
+input[type="text"]::placeholder {
+	color: var(--black);
+	font-size: 2.4rem;
+}
+
+/* BUTTON */
+.search-local button {
+	background: var(--red);
+	border: none;
+	border-radius: 0 1rem 1rem 0;
+	font-weight: 500;
+	font-size: 2.4rem;
+	height: 7rem;
+	width: 18rem;
+	cursor: pointer;
+	transition: all 0.3s;
+	text-align: center;
+}
+
+button a {
+	color: var(--white);
+}
+
+.search-local button .search-icon {
+	display: none;
+}
+
+.search-local button:hover {
+	letter-spacing: 0.5rem;
+}
+
+/* MEDIAS */
+@media (max-width: 575px) {
+	.search-local {
+		padding-left: 0;
+		column-gap: 0.25rem;
+	}
+
+	.search-local button {
+		width: 10rem;
+	}
+
+	button a {
+		display: none;
+	}
+
+	.search-local button .search-icon {
+		display: block;
+		margin-inline: auto;
+		color: var(--white);
+		font-size: 3rem;
+	}
+
+	input[type="text"]::placeholder {
+		font-size: 1.7rem;
+	}
+}
+#p {
+	position: absolute;
+    left: 62%;
+    top: 26%;
+    /* top: 1%; */
+    font-size: 20px;
+}
+
+h1{
+	position: absolute;
+    color: #da2535;
+    top: 6%;
+	font-size: 40px;
+}
+
+.bold-text {
+	font-weight: bold;
+}
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search for Content</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<h1>Search for Content</h1>
+    <div class="search-local">
+        <div class="icon">
+            <ion-icon name="location-outline"></ion-icon>
+        </div>
+        <input type="text" placeholder="Ask a question" id="search">
+        <button onclick="get_search()">
+            <a href="#">Submit</a>
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+        </button>
+    </div>
+	<div class="container" style="    position: absolute;
+    top: 32%;padding-left:30px;padding-right:30px;">
+		<table class="table" id="myTable" >
+			<thead>
+			<tr>
+				<th scope="col">#</th>
+				<th scope="col">Content</th>
+				<th scope="col">Similarity percentage</th>
+				
+			</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<a href="/" id="p">Content Reading </a>
+	<span style="position: absolute;font-size:20px;font-weight:bold;left: 27%;top:50%">Summaries</span>
+	<div class="search-local" style="position: absolute;top:56%">
+        <textarea id="summaries" name="w3review" rows="10" cols="50">
+		</textarea>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+	<script>
+		var data_list = [];
+		function get_search(){
+			var search = document.getElementById("search").value;
+			if(search!=""){
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', '/search?searchtext='+search, true);
+				xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4) {
+					if (xhr.status === 200) {
+						var data = JSON.parse(xhr.responseText);
+						console.log(data['query']);
+						console.log(data['summaries']); 
+						document.getElementById("summaries").innerHTML="";
+						if(data['summaries'].length==0){
+							alert("No Content found")
+						}
+						var uniqueSummaries = [];
+						var table = document.getElementById("myTable").getElementsByTagName('tbody')[0];
+						while (table.rows.length > 0) {
+							table.deleteRow(0);
+						}
+						data_list = data['summaries']
+						for(var i =0 ;i<data['summaries'].length;i++){
+
+							if(i<3){		
+								var summary = data['summaries'][i][0];
+								var percentage = data['summaries'][i][1];
+								if (!uniqueSummaries.includes(summary)) {
+									console.log(summary)
+									uniqueSummaries.push(summary);
+									if (summary !== "") {
+									
+										var newRow = table.insertRow(table.rows.length);
+										newRow.id = i
+
+
+										var cell = newRow.insertCell(0);
+										cell.innerHTML = i+1;
+
+										var cell = newRow.insertCell(1);
+										cell.innerHTML = summary.replace(/^\s+|\s+$/gm,'');
+
+										var cell = newRow.insertCell(2);
+										cell.innerHTML = percentage;
+
+								
+										
+									}
+								}
+							}
+						}
+
+						var rows = document.querySelectorAll("#myTable tbody tr");
+						// Add a click event listener to each table row
+						rows.forEach(function(row) {
+							row.addEventListener("click", function() {
+								// Get the ID attribute of the clicked row
+								var id = row.getAttribute("id");
+								var search = document.getElementById("search").value;
+								var summary = data['summaries'][parseInt(id)][0];
+								document.getElementById("summaries").innerHTML="";
+								var highlightedSummary = summary.replace(new RegExp(search, 'gi'), function (match) {
+									return '' + match + ' ';
+								});
+
+								document.getElementById("summaries").innerHTML += "" + highlightedSummary.replace(/^\s+|\s+$/gm,'') + "";
+								document.getElementById("summaries").innerHTML +=""
+
+
+
+							});
+						});
+					} else {
+					console.error('Request failed with status:', xhr.status);
+					}
+				}
+				};
+
+				xhr.send();
+			}
+			else{
+				alert("Empty search field")
+			}
+		}
+
+
+		
+
+
+
+
+	</script>
+
+
+</body>
+</html>
